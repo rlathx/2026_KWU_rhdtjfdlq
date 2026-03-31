@@ -24,6 +24,6 @@ public class LoginServiceImpl implements LoginService {
             throw new RuntimeException("INVALID_PASSWORD");
         }
 
-        return "로그인 완료되었습니다.";
+        return "로그인 성공";
     }
 }
