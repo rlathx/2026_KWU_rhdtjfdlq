@@ -41,6 +41,7 @@ public class GlobalExceptionHandler {
                 .badRequest()
                 .body(ResponseSignupDto.error(e.getMessage()));
     }
+
     // 4. 로그인 예외 처리
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<?> handleRuntimeException(RuntimeException e) {
@@ -63,8 +64,19 @@ public class GlobalExceptionHandler {
                     .body(Map.of("message", "올바른 이메일 타입이 아닙니다."));
         }
 
-        return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of("message", "서버 오류"));
-    }
+        if (e.getMessage().equals("INVALID_FILE_TYPE")) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Map.of("message", "올바르지 않은 파일 형식입니다"));
+        }
+
+        if (e.getMessage().equals("INVALID_PHONE_NUMBER")) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Map.of("message", "올바르지 않은 전화번호 형식입니다"));
+        }
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("message", "서버 오류"));
+        }
 }
