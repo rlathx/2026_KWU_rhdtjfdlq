@@ -15,27 +15,24 @@ public class CarEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 차량 종류
     @Column(nullable = false)
     private String vehicleType;
 
-    // 차량 번호
     @Column(nullable = false, unique = true)
     private String carNum;
 
-    // 차량 프로필 이미지 URL
     private String carProfile;
 
-    // 차량 설명
     private String comment;
 
-    // 차량 등록증 (파일 URL or 저장 경로)
     @Column(nullable = false)
     private String registration;
 
-    @ManyToOne(fetch = FetchType.LAZY) //유저가 여러 차량을 등록할 수 있기 때문에 ManyToOne 구조 사용
-    @JoinColumn(name = "user_id")
+    // 🔥 핵심 수정
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
+
     public void updateCarInfo(
             String vehicleType,
             String carProfile,
@@ -48,7 +45,8 @@ public class CarEntity {
         this.registration = registration;
     }
 
-    public void setUser(UserEntity user) {
+    // setter 대신 의미 있는 메서드
+    public void assignUser(UserEntity user) {
         this.user = user;
     }
 }

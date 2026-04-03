@@ -4,14 +4,15 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-
 public class UserEntity {
 
     @Id
@@ -25,10 +26,6 @@ public class UserEntity {
     // 암호화된 비밀번호 저장
     @Column(nullable = false)
     private String password;
-
-    public void changePassword(String newPassword) {
-        this.password = newPassword;
-    }
 
     // 이름
     @Column(name = "name")
@@ -58,14 +55,27 @@ public class UserEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    // 🔥 연관관계 추가 (User 1 : N Car)
+    @OneToMany(mappedBy = "user")
+    private List<CarEntity> cars = new ArrayList<>();
+
+
+    // 시간 자동 처리
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
+        updatedAt = createdAt; // 🔥 추가
     }
 
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+
+    // 비즈니스 로직
+
+    public void changePassword(String newPassword) {
+        this.password = newPassword;
     }
 
     public void updateMyInfo(String name, String phoneNum) {
@@ -77,5 +87,11 @@ public class UserEntity {
         this.nickName = nickName;
         this.message = message;
         this.profile = profile;
+    }
+
+    // 연관관계 편의 메서드
+    public void addCar(CarEntity car) {
+        this.cars.add(car);
+        car.assignUser(this);
     }
 }
