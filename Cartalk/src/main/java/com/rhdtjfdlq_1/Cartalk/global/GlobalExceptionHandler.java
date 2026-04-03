@@ -1,18 +1,18 @@
 package com.rhdtjfdlq_1.Cartalk.global;
 
-import com.rhdtjfdlq_1.Cartalk.dto.ResponseSignupDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
+
 import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // 1. @Valid 검증 실패 (이메일 형식, NotBlank 등)
+    // @Valid 검증 실패
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ResponseSignupDto> handleValidationException(MethodArgumentNotValidException e) {
+    public ResponseEntity<?> handleValidationException(MethodArgumentNotValidException e) {
 
         String errorMessage = e.getBindingResult()
                 .getFieldErrors()
@@ -21,62 +21,56 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .badRequest()
-                .body(ResponseSignupDto.error(errorMessage));
+                .body(Map.of("message", errorMessage));
     }
 
-    // 2. 서비스에서 던진 예외 (예: 이메일 중복)
+    // 비즈니스 로직 에러 (핵심)
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ResponseSignupDto> handleIllegalArgumentException(IllegalArgumentException e) {
+    public ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException e) {
 
-        return ResponseEntity
-                .badRequest()
-                .body(ResponseSignupDto.error(e.getMessage()));
+        // 메시지 분기 처리
+        switch (e.getMessage()) {
+
+            case "USER_NOT_FOUND":
+                return ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .body(Map.of("message", "존재하지 않는 회원입니다."));
+
+            case "INVALID_PASSWORD":
+                return ResponseEntity
+                        .status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("message", "이메일 또는 비밀번호가 올바르지 않습니다."));
+
+            case "INVALID_EMAIL_TYPE":
+                return ResponseEntity
+                        .badRequest()
+                        .body(Map.of("message", "올바른 이메일 타입이 아닙니다."));
+
+            case "INVALID_FILE_TYPE":
+                return ResponseEntity
+                        .badRequest()
+                        .body(Map.of("message", "올바르지 않은 파일 형식입니다"));
+
+            case "INVALID_PHONE_NUMBER":
+                return ResponseEntity
+                        .badRequest()
+                        .body(Map.of("message", "올바르지 않은 전화번호 형식입니다"));
+
+            default:
+                return ResponseEntity
+                        .badRequest()
+                        .body(Map.of("message", e.getMessage()));
+        }
     }
 
-    // 3. 인증 상태 관련 예외 (인증 안됨, 코드 만료 등)
-    @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity<ResponseSignupDto> handleIllegalStateException(IllegalStateException e) {
+    // 기타 예외 (진짜 서버 에러)
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> handleException(Exception e) {
+
+        e.printStackTrace();
 
         return ResponseEntity
-                .badRequest()
-                .body(ResponseSignupDto.error(e.getMessage()));
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of("message", "서버 오류"));
     }
-
-    // 4. 로그인 예외 처리
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<?> handleRuntimeException(RuntimeException e) {
-
-        if (e.getMessage().equals("USER_NOT_FOUND")) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(Map.of("message", "존재하지 않는 회원입니다."));
-        }
-
-        if (e.getMessage().equals("INVALID_PASSWORD")) {
-            return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("message", "이메일 또는 비밀번호가 올바르지 않습니다."));
-        }
-
-        if (e.getMessage().equals("INVALID_EMAIL_TYPE")) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("message", "올바른 이메일 타입이 아닙니다."));
-        }
-
-        if (e.getMessage().equals("INVALID_FILE_TYPE")) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(Map.of("message", "올바르지 않은 파일 형식입니다"));
-        }
-
-        if (e.getMessage().equals("INVALID_PHONE_NUMBER")) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(Map.of("message", "올바르지 않은 전화번호 형식입니다"));
-        }
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("message", "서버 오류"));
-        }
 }
