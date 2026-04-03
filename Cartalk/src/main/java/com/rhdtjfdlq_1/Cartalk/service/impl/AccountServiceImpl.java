@@ -29,6 +29,6 @@ public class AccountServiceImpl implements AccountService {
 
         user.updateMyInfo(request.getName(), phoneNumber);
 
-        return "내 정보가 수정 되었습니다.";
+        return "내 정보가 설정 되었습니다.";
     }
 }
