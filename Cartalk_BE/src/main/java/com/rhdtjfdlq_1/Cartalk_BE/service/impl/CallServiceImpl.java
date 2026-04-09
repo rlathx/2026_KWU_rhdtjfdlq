@@ -32,19 +32,22 @@ public class CallServiceImpl implements CallService {
         UserEntity user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("USER_NOT_FOUND"));
 
-        int usedCount = callRepository.countByChatRoomId(chatId);
+        int usedCount = callRepository.countByChatRoomIdAndCallerId(chatId, userId);
 
-        if (usedCount < MAX_CALL_COUNT) {
-            callRepository.save(
-                    CallEntity.builder()
-                            .chatRoom(chatRoom)
-                            .caller(user)
-                            .build()
-            );
-            usedCount++;
+        if (usedCount >= MAX_CALL_COUNT) {
+            throw new IllegalArgumentException("CALL_LIMIT_EXCEEDED");
         }
 
-        int remainingCount = Math.max(0, MAX_CALL_COUNT - usedCount);
+        callRepository.save(
+                CallEntity.builder()
+                        .chatRoom(chatRoom)
+                        .caller(user)
+                        .build()
+        );
+
+        usedCount++;
+
+        int remainingCount = MAX_CALL_COUNT - usedCount;
 
         return ResponseCallDto.builder()
                 .call(

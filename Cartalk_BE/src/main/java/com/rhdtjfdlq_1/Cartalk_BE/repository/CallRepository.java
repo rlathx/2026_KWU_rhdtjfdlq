@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CallRepository extends JpaRepository<CallEntity, Long> {
 
-    int countByChatRoomId(Long chatRoomId);
+    int countByChatRoomIdAndCallerId(Long chatRoomId, Long callerId);
 
     void deleteByChatRoomId(Long chatRoomId);
 }

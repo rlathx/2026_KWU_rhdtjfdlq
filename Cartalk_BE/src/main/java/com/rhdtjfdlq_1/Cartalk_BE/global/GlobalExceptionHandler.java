@@ -66,6 +66,11 @@ public class GlobalExceptionHandler {
                         .badRequest()
                         .body(Map.of("message", "자기 자신과는 대화할 수 없습니다."));
 
+            case "CALL_LIMIT_EXCEEDED":
+                return ResponseEntity
+                        .badRequest()
+                        .body(Map.of("message", "안심 전화 횟수를 모두 사용했습니다."));
+
             default:
                 return ResponseEntity
                         .badRequest()
