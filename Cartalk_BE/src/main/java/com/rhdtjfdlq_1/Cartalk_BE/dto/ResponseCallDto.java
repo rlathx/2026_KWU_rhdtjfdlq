@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ResponseCallDto {
 
+    private Long userId;
     private CallInfo call;
     private boolean callAvailable;
 

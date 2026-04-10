@@ -1,6 +1,7 @@
 package com.rhdtjfdlq_1.Cartalk_BE.controller;
 
 import com.rhdtjfdlq_1.Cartalk_BE.dto.ResponseCallDto;
+import com.rhdtjfdlq_1.Cartalk_BE.dto.RequestCallDto;
 import com.rhdtjfdlq_1.Cartalk_BE.service.port.CallService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,9 @@ public class CallController {
     @PostMapping("/{chatId}/calls")
     public ResponseEntity<ResponseCallDto> useSafeCall(
             @PathVariable Long chatId,
-            @RequestParam Long userId
+            @RequestBody RequestCallDto request
     ) {
-        ResponseCallDto response = callService.useSafeCall(userId, chatId);
+        ResponseCallDto response = callService.useSafeCall(request.getUserId(), chatId);
         return ResponseEntity.ok(response);
     }
 }
