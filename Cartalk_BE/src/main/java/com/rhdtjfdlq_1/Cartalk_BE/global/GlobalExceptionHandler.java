@@ -71,6 +71,11 @@ public class GlobalExceptionHandler {
                         .badRequest()
                         .body(Map.of("message", "안심 전화 횟수를 모두 사용했습니다."));
 
+            case "CHAT_ROOM_NOT_FOUND":
+                return ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .body(Map.of("message", "존재하지 않는 채팅방입니다."));
+
             default:
                 return ResponseEntity
                         .badRequest()

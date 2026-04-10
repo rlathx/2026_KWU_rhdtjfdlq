@@ -19,4 +19,7 @@ public interface CarInfoRepository extends JpaRepository<CarEntity, Long> {
 
     // 특정 유저의 특정 차량 조회 (보안용)
     Optional<CarEntity> findByIdAndUserId(Long carId, Long userId);
+
+    //대표 차량 1개 가져오기
+    Optional<CarEntity> findTopByUserId(Long userId);
 }
