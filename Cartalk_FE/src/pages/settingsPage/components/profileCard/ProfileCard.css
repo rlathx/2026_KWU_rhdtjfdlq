@@ -1,0 +1,62 @@
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  width: 100%;
+  padding: 40px 48px;
+  background-color: var(--bg-card);
+  border-radius: var(--r-card-lg);
+  box-sizing: border-box;
+}
+
+/* 아바타  */
+.profile-card__avatar {
+  width: 66px;
+  height: 66px;
+  border-radius: 25px;
+  background-color: var(--p-light);
+  flex-shrink: 0;
+}
+
+/* 정보 + badge 묶음 */
+.profile-card__info-wrap {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* 닉네임 + 상태메시지 세로 묶음 */
+.profile-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+/* 닉네임  */
+.profile-card__nickname {
+  font-size: var(--section-size);
+  font-weight: var(--section-weight);
+  letter-spacing: var(--section-tracking);
+  line-height: var(--section-leading);
+  color: var(--txt-high);
+  white-space: nowrap;
+}
+
+/* 상태메시지 */
+.profile-card__status {
+  font-size: var(--body-sm-size);
+  font-weight: var(--body-sm-weight);
+  line-height: var(--body-sm-leading);
+  color: var(--txt-mid);
+}
+
+/* 버튼 묶음 */
+.profile-card__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-8);
+  flex-shrink: 0;
+}

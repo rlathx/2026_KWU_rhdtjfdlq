@@ -1,0 +1,80 @@
+/* 헤더 전체  */
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 20px 30px;
+  background-color: var(--bg-chat);
+  flex-shrink: 0;
+}
+
+/* 내부 행 — 좌: 아바타+정보, 우: 버튼들 */
+.chat-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px;
+}
+
+/* 좌측 묶음 */
+.chat-header__left {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* 아바타  */
+.chat-header__avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--r-shell);
+  background-color: var(--p-light);
+  flex-shrink: 0;
+}
+
+/* 아바타 + 정보 세로 묶음 */
+.chat-header__body {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+/* 번호판 + badge 가로 묶음 */
+.chat-header__info {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+/* 번호판  */
+.chat-header__plate {
+  font-size: var(--section-size);
+  font-weight: var(--section-weight);
+  letter-spacing: var(--section-tracking);
+  line-height: var(--section-leading);
+  color: var(--txt-heading);
+  white-space: nowrap;
+}
+
+/* 닉네임  */
+.chat-header__nickname {
+  font-size: var(--label-size);
+  font-weight: var(--label-weight);
+  letter-spacing: var(--label-tracking);
+  line-height: var(--label-leading);
+  color: var(--txt-mid);
+  white-space: nowrap;
+}
+
+/* 우측 버튼 묶음 */
+.chat-header__buttons {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  flex-shrink: 0;
+}

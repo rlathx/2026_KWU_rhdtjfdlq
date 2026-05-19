@@ -1,0 +1,93 @@
+.safecall-modal__overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(26, 25, 35, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+/* 모달 본체 — 630x300, radius card, shadow */
+.safecall-modal {
+  position: relative;
+  width: 630px;
+  background-color: var(--bg-card);
+  border-radius: var(--r-card);
+  overflow: hidden;
+  box-shadow: 0px 0px 40px 0px rgba(26, 25, 35, 0.2);
+}
+
+/* 상단 — 질문 텍스트 중앙 정렬, height 200px */
+.safecall-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  padding: 20px;
+}
+
+/* 닫기 버튼 — 우상단 absolute */
+.safecall-modal__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 28px;
+  color: var(--txt-low);
+  cursor: pointer;
+}
+
+.safecall-modal__close:hover {
+  color: var(--txt-mid);
+}
+
+/* 질문 텍스트 — Medium 28px */
+.safecall-modal__title {
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 28px;
+  color: var(--txt-high);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* 구분선 */
+.safecall-modal__divider-h {
+  width: 100%;
+  height: 1px;
+  background-color: var(--border-default);
+}
+
+/* 하단 버튼 행 */
+.safecall-modal__actions {
+  display: flex;
+  height: 100px;
+}
+
+.safecall-modal__btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 28px;
+  color: var(--txt-high);
+  cursor: pointer;
+  background: none;
+}
+
+.safecall-modal__btn:hover {
+  background-color: var(--n-200);
+}
+
+/* 세로 구분선 */
+.safecall-modal__divider-v {
+  width: 1px;
+  background-color: var(--border-default);
+  flex-shrink: 0;
+}

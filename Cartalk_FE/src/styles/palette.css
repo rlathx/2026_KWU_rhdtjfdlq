@@ -1,0 +1,85 @@
+:root {
+  /* ── Primary ── */
+  --p-main: #fee500;
+  --p-dark: #d4bf00;
+  --p-light: #fff9cc;
+
+  /* ── Secondary ── */
+  --secondary-main: #3b2a2a;
+
+  /* ── Neutral ── */
+  --n-900: #1a1410;
+  --n-800: #2a1f1f;
+  --n-700: #3d2a2a;
+  --n-200: #f5f5f5;
+  --n-100: #fafafa;
+  --n-050: #ffffff;
+
+  /* ── Text ── */
+  --txt-high: #191919;
+  --txt-mid: #555555;
+  --txt-low: #999999;
+  --txt-on-y: #3b2a2a;
+
+  /* ── Text alias ── */
+  --txt-heading: #191919;
+  --txt-body: #555555;
+  --txt-placeholder: #999999;
+
+  /* ── Semantic ── */
+  --err: #c04848;
+  --ok: #2a8a5a;
+
+  /* ── Background ── */
+  --bg-page: #f5f5f5;
+  --bg-card: #ffffff;
+  --bg-input: #fafafa;
+  --bg-sidebar: #f5f5f5;
+  --bg-sidebar-active: #ebebeb;
+  --bg-chat: #b2c7d9;
+
+  /* ── Border ── */
+  --border-default: #e0e0e0;
+  --border-dark: #3d2a2a;
+  --border-focus: #fee500;
+  --border-error: #c04848;
+
+  /* ── Icon ── */
+  --icon-default: #9e9e9e;
+  --icon-active: #191919;
+
+  /* ── Opacity ── */
+  --opacity-dim: 0.52;
+  --opacity-disabled: 0.4;
+  --opacity-hover: 0.14;
+
+  /* ── Stroke ── */
+  --stroke-default: 1.5px;
+  --stroke-dark: 1px;
+
+  /* ── Icon size ── */
+  --icon-sm: 16px;
+  --icon-md: 19px;
+  --icon-lg: 24px;
+
+  /* ── Spacing ── */
+  --sp-4: 4px;
+  --sp-8: 8px;
+  --sp-12: 12px;
+  --sp-16: 16px;
+  --sp-20: 20px;
+  --sp-24: 24px;
+  --sp-32: 32px;
+  --sp-40: 40px;
+  --sp-48: 48px;
+
+  /* ── Border Radius ── */
+  --r-badge: 6px;
+  --r-sm: 8px;
+  --r-default: 9px;
+  --r-card: 12px;
+  --r-card-lg: 14px;
+  --r-modal: 16px;
+  --r-shell: 30px;
+  --r-pill: 999px;
+}

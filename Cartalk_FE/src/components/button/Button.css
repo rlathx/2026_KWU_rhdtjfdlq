@@ -1,0 +1,95 @@
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    color 0.15s;
+}
+
+/* ── primary — h46, r-default, bg p-main, 너비 꽉 채움 ── */
+.btn--primary {
+  width: 100%;
+  height: 46px;
+  padding: 0 13px;
+  background-color: var(--p-main);
+  border-radius: var(--r-default);
+  color: var(--txt-on-y);
+  font-size: var(--body-sm-size);
+  font-weight: var(--body-sm-weight);
+  line-height: var(--body-sm-leading);
+}
+
+.btn--primary:hover {
+  background-color: var(--p-dark);
+}
+
+/* ── ghost — h46, r-default, border stroke-default, 너비 상황에 따라 ── */
+.btn--ghost {
+  height: 46px;
+  padding: 0 13px;
+  background-color: transparent;
+  border: var(--stroke-default) solid var(--border-default);
+  border-radius: var(--r-default);
+  color: var(--txt-mid);
+  font-size: var(--body-sm-size);
+  font-weight: var(--body-sm-weight);
+  line-height: var(--body-sm-leading);
+}
+
+.btn--ghost:hover {
+  border-color: var(--border-focus);
+  color: var(--txt-high);
+}
+
+/* ── outline — py5 px20, r-sm, border stroke-default, 내용 너비 ── */
+.btn--outline {
+  padding: 5px 20px;
+  background-color: transparent;
+  border: var(--stroke-default) solid var(--border-default);
+  border-radius: var(--r-sm);
+  color: var(--txt-mid);
+  font-size: var(--body-sm-size);
+  font-weight: var(--body-sm-weight);
+  line-height: var(--body-sm-leading);
+}
+
+.btn--outline:hover {
+  border-color: var(--border-focus);
+  color: var(--txt-high);
+}
+
+/* ── outline-dark — py10 px20, r-sm, border 2px border-dark, 내용 너비 ── */
+.btn--outline-dark {
+  padding: 10px 20px;
+  background-color: transparent;
+  border: 2px solid var(--border-dark);
+  border-radius: var(--r-sm);
+  color: var(--txt-on-y);
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-leading);
+}
+
+.btn--outline-dark:hover {
+  opacity: 0.8;
+}
+
+/* ── small — h42, r-sm, bg p-main, 내용 너비 ── */
+.btn--small {
+  height: 42px;
+  padding: 0 13px;
+  background-color: var(--p-main);
+  border-radius: var(--r-sm);
+  color: var(--txt-on-y);
+  font-size: var(--body-sm-size);
+  font-weight: var(--body-sm-weight);
+  line-height: var(--body-sm-leading);
+}
+
+.btn--small:hover {
+  background-color: var(--p-dark);
+}

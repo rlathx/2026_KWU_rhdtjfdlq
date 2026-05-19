@@ -1,0 +1,152 @@
+.vehicle-modal__overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(26, 25, 35, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+/* 모달 본체 — 400px, radius card, shadow */
+.vehicle-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+  background-color: var(--bg-card);
+  border: 0.5px solid var(--border-default);
+  border-radius: var(--r-card);
+  overflow: hidden;
+  box-shadow: 0px 0px 40px 0px rgba(26, 25, 35, 0.2);
+  position: relative;
+}
+
+/* 닫기 버튼 — absolute 우상단 */
+.vehicle-modal__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--txt-high);
+  cursor: pointer;
+  background: none;
+  border: none;
+  z-index: 1;
+}
+
+.vehicle-modal__close:hover {
+  color: var(--txt-mid);
+}
+
+/* 이미지 영역 — 1:1 비율 */
+.vehicle-modal__image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: var(--bg-chat);
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* 이미지 — 사진 있을 때 */
+.vehicle-modal__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 본문 */
+.vehicle-modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 18px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 번호판 + 닉네임 */
+.vehicle-modal__id {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+/* 번호판 + 뱃지 가로 묶음 */
+.vehicle-modal__plate-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.vehicle-modal__plate {
+  font-size: var(--plate-size);
+  font-weight: var(--plate-weight);
+  letter-spacing: var(--plate-tracking);
+  line-height: var(--plate-leading);
+  color: var(--txt-heading);
+}
+
+.vehicle-modal__nickname {
+  font-size: var(--body-sm-size);
+  font-weight: var(--body-sm-weight);
+  line-height: var(--body-sm-leading);
+  color: var(--txt-mid);
+}
+
+/* 구분선 */
+.vehicle-modal__divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--border-default);
+}
+
+/* 차량 정보 */
+.vehicle-modal__info {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.vehicle-modal__info-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: var(--body-sm-size);
+  font-weight: var(--body-sm-weight);
+  line-height: var(--body-sm-leading);
+}
+
+/* 라벨 — txt-low, 52px 고정, nowrap, 오른쪽 정렬 */
+.vehicle-modal__info-label {
+  color: var(--txt-low);
+  white-space: nowrap;
+  flex-shrink: 0;
+  width: 52px;
+  text-align: right;
+}
+
+.vehicle-modal__info-value {
+  color: var(--txt-heading);
+  word-break: keep-all;
+}
+
+/* 상태메시지 박스 — bg-input, border, r-sm */
+.vehicle-modal__status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 11px;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-sm);
+  font-size: var(--body-sm-size);
+  font-weight: var(--body-sm-weight);
+  line-height: var(--body-sm-leading);
+  color: var(--txt-mid);
+  text-align: center;
+  margin-bottom: 4px;
+}

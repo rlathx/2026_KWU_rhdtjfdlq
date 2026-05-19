@@ -1,0 +1,121 @@
+.signup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-card);
+}
+
+/* 로고 + 카드 세로 묶음 */
+.signup__wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-20);
+  width: 100%;
+  max-width: 527px;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+/* 로고 */
+.signup__brand {
+  font-size: var(--logo-size);
+  font-weight: var(--logo-weight);
+  letter-spacing: var(--logo-tracking);
+  line-height: var(--logo-leading);
+  color: var(--txt-high);
+  text-align: center;
+}
+
+/* 카드 */
+.signup__card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: stretch;
+  width: 100%;
+  padding: 48px 52px;
+  background-color: var(--bg-card);
+  border: var(--stroke-default) solid var(--border-default);
+  box-sizing: border-box;
+}
+
+/* 인풋 묶음 */
+.signup__inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  margin-bottom: var(--sp-20);
+}
+
+/* 제목 — ExtraBold 28px */
+.signup__title {
+  font-size: var(--title-size);
+  font-weight: var(--title-weight);
+  letter-spacing: var(--title-tracking);
+  line-height: var(--title-leading);
+  color: var(--txt-high);
+}
+
+/* 부제목 */
+.signup__subtitle {
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-leading);
+  color: var(--txt-mid);
+  margin-bottom: var(--sp-32);
+}
+
+/* 언더라인 인풋 */
+.signup__input {
+  flex: 1;
+  height: 44px;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-default);
+  border-radius: 0;
+  outline: none;
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-leading);
+  color: var(--txt-heading);
+  min-width: 0;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.signup__input::placeholder {
+  color: var(--txt-placeholder);
+  font-weight: 200;
+  font-size: var(--body-sm-size);
+}
+
+.signup__input:focus {
+  border-bottom-color: var(--border-focus);
+}
+
+/* 인풋 + 액션 링크 세로 묶음 */
+.signup__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+/* 인증 액션 링크 — 오른쪽 정렬 */
+.signup__action {
+  font-size: var(--body-sm-size);
+  font-weight: var(--body-sm-weight);
+  line-height: var(--body-sm-leading);
+  color: var(--txt-high);
+  text-align: right;
+  cursor: pointer;
+}
+
+.signup__action:hover {
+  color: var(--p-main);
+}
