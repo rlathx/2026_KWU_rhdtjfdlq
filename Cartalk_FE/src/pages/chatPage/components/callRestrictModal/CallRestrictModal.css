@@ -1,0 +1,31 @@
+.callrestrict-toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 60px;
+  background-color: var(--bg-card);
+  border-radius: var(--r-card);
+  box-shadow: 0px 0px 40px 0px rgba(26, 25, 35, 0.2);
+  z-index: 200;
+  white-space: nowrap;
+}
+
+/* 아이콘  */
+.callrestrict-toast__icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+/* 텍스트 */
+.callrestrict-toast__text {
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-leading);
+  color: var(--txt-high);
+  text-align: center;
+}

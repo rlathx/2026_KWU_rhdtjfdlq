@@ -1,0 +1,62 @@
+/* 리스트 아이템 행  */
+.chat-list-item {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  padding: 10px 16px;
+  width: 100%;
+  cursor: pointer;
+  box-sizing: border-box;
+  border-radius: var(--r-sm);
+  transition: background-color 0.15s;
+}
+
+.chat-list-item:hover {
+  background-color: var(--n-200);
+}
+
+/* 아바타  */
+.chat-list-item__avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--r-shell);
+  background-color: var(--p-light);
+  flex-shrink: 0;
+}
+
+/* 본문*/
+.chat-list-item__body {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* 번호판 + badge 가로 묶음 */
+.chat-list-item__info {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+/* 번호판 */
+.chat-list-item__plate {
+  font-size: var(--plate-size);
+  font-weight: var(--plate-weight);
+  letter-spacing: var(--plate-tracking);
+  line-height: var(--plate-leading);
+  color: var(--txt-heading);
+  white-space: nowrap;
+}
+
+/* 마지막 메시지 */
+.chat-list-item__last-msg {
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-leading);
+  color: var(--txt-low);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

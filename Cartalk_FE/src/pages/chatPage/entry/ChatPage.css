@@ -1,0 +1,71 @@
+.chat {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-input);
+}
+
+/* 메인 영역 — sidebar 우측 전체 */
+.chat__main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-left: 88px;
+  min-height: 100vh;
+  background-color: var(--bg-chat);
+  overflow: hidden;
+}
+
+/* 채팅방 — flex-grow, 스크롤 가능, padding 80px */
+.chat__room {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 80px;
+  overflow-y: auto;
+}
+
+/* ── none 화면 ── */
+.chat__none {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-left: 88px;
+  min-height: 100vh;
+  background-color: var(--bg-card);
+  align-items: center;
+  justify-content: center;
+}
+
+/* none 안내 — 아이콘 + 텍스트 가로 */
+.chat__none-inner {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+/* none 아이콘 — 80x80 */
+.chat__none-icon {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+}
+
+/* none 텍스트 묶음 */
+.chat__none-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* none 텍스트 — Medium 28px */
+.chat__none-line {
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 28px;
+  color: var(--txt-mid);
+  text-align: center;
+  white-space: pre;
+}

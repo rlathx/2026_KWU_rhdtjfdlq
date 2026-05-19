@@ -1,0 +1,31 @@
+.step-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-8);
+}
+
+/* 스텝 원 공통 — 28x28, radius pill */
+.step-indicator__step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--r-pill);
+  font-size: var(--body-sm-size);
+  font-weight: var(--body-sm-weight);
+  line-height: var(--body-sm-leading);
+  flex-shrink: 0;
+}
+
+/* 활성(현재·완료) — bg: p-main, 텍스트: txt-on-y */
+.step-indicator__step--active {
+  background-color: var(--p-main);
+  color: var(--txt-on-y);
+}
+
+/* 비활성 — bg: n-800(#2a1f1f), 텍스트: #6b5b5b */
+.step-indicator__step--idle {
+  background-color: var(--n-800);
+  color: #6b5b5b;
+}

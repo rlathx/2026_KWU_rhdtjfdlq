@@ -1,0 +1,114 @@
+.login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-card);
+}
+
+/* 로고 + 카드 세로 묶음 */
+.login__wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-24);
+  width: 100%;
+  max-width: 520px;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+/* 로고 */
+.login__brand {
+  height: 20px;
+  width: auto;
+}
+
+/* 카드 */
+.login__card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  padding: 52px 56px;
+  background-color: var(--bg-card);
+  border: var(--stroke-default) solid var(--border-default);
+  box-sizing: border-box;
+}
+
+/* content — 인풋묶음 + 비밀번호찾기 세로 배치, 우측 정렬 */
+.login__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--sp-12);
+  width: 100%;
+}
+
+/* body — 인풋 + 버튼들 세로 묶음 */
+.login__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-32);
+  width: 100%;
+}
+
+/* 인풋 묶음 */
+.login__inputs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-12);
+  width: 100%;
+}
+
+/* 버튼 묶음 */
+.login__buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-12);
+  width: 100%;
+}
+
+/* 언더라인 인풋 */
+.login__input {
+  width: 100%;
+  height: 44px;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-default);
+  border-radius: 0;
+  outline: none;
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-leading);
+  color: var(--txt-heading);
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.login__input::placeholder {
+  color: var(--txt-placeholder);
+  font-weight: 300;
+}
+
+.login__input:focus {
+  border-bottom-color: var(--border-focus);
+}
+
+/* 비밀번호 찾기 */
+.login__forgot {
+  font-size: var(--body-sm-size);
+  font-weight: var(--body-sm-weight);
+  line-height: var(--body-sm-leading);
+  color: var(--txt-low);
+  text-align: right;
+  text-decoration: underline;
+  cursor: pointer;
+  width: 100%;
+}
+
+.login__forgot:hover {
+  color: var(--txt-mid);
+}

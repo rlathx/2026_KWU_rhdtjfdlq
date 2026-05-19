@@ -1,0 +1,56 @@
+/* 버블 행 공통 */
+.chat-bubble-row {
+  display: flex;
+  width: 100%;
+}
+
+/* 상대방 — 좌측 정렬 */
+.chat-bubble-row--other {
+  justify-content: flex-start;
+}
+
+/* 내 메시지 — 우측 정렬 */
+.chat-bubble-row--mine {
+  justify-content: flex-end;
+}
+
+/* 버블 공통 */
+.chat-bubble {
+  max-width: 340px;
+  padding: 9px 15px;
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-leading);
+  word-break: break-word;
+}
+
+/* 상대방 버블  */
+.chat-bubble--other {
+  background-color: var(--bg-card);
+  border-radius: 3px 11px 11px 11px;
+  color: var(--txt-heading);
+}
+
+/* 내 버블  */
+.chat-bubble--mine {
+  background-color: var(--p-main);
+  border-radius: 11px 3px 11px 11px;
+  color: var(--txt-on-y);
+  text-align: center;
+}
+
+/* 이미지 버블 */
+.chat-bubble--image {
+  max-width: 449px;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+}
+
+.chat-bubble--image img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  display: block;
+  border-radius: 11px;
+}

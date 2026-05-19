@@ -1,0 +1,90 @@
+/* 폰트를 불러오고, 관련 변수를 관리합니다. */
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('../assets/font/Pretendard-Medium.woff') format('woff');
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('../assets/font/Pretendard-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('../assets/font/Pretendard-Bold.woff') format('woff');
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('../assets/font/Pretendard-ExtraBold.woff') format('woff');
+  font-weight: 800;
+  font-display: swap;
+}
+
+:root {
+  /* ── Display — 40px ExtraBold ── */
+  --display-size: 40px;
+  --display-weight: 800;
+  --display-leading: 41px;
+  --display-tracking: -0.16em;
+
+  /* ── Page Title — 28px ExtraBold ── */
+  --title-size: 28px;
+  --title-weight: 800;
+  --title-leading: 28px;
+  --title-tracking: -0.03em;
+
+  /* ── Logo — 22px SemiBold ── */
+  --logo-size: 22px;
+  --logo-weight: 600;
+  --logo-leading: 28px;
+  --logo-tracking: -0.66px;
+
+  /* ── Section Title — 24px ExtraBold ── */
+  --section-size: 24px;
+  --section-weight: 800;
+  --section-leading: 24px;
+  --section-tracking: -0.02em;
+
+  /* ── Plate Number — 20px ExtraBold ── */
+  --plate-size: 20px;
+  --plate-weight: 800;
+  --plate-leading: 22px;
+  --plate-tracking: 0.04em;
+
+  /* ── Body Default — 16px Medium ── */
+  --body-size: 16px;
+  --body-weight: 500;
+  --body-leading: 22px;
+  --body-tracking: 0px;
+
+  /* ── Body Small — 15px Medium ── */
+  --body-sm-size: 15px;
+  --body-sm-weight: 500;
+  --body-sm-leading: 20px;
+  --body-sm-tracking: 0px;
+
+  /* ── Label — 13px Bold ── */
+  --label-size: 13px;
+  --label-weight: 700;
+  --label-leading: 16px;
+  --label-tracking: 0.05em;
+
+  /* ── Tiny — 12px Bold ── */
+  --tiny-size: 12px;
+  --tiny-weight: 700;
+  --tiny-leading: 14px;
+  --tiny-tracking: 0.04em;
+}
+
+/* 전역 폰트 설정 */
+* {
+  font-family: 'Pretendard', sans-serif;
+}

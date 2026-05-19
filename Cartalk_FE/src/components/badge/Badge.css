@@ -1,0 +1,24 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 8px;
+  border-radius: var(--r-pill);
+  font-size: var(--tiny-size);
+  font-weight: var(--tiny-weight);
+  line-height: var(--tiny-leading);
+  letter-spacing: var(--tiny-tracking);
+  white-space: nowrap;
+}
+
+/* ── verified — bg: p-light, color: secondary-main ── */
+.badge--verified {
+  background-color: var(--p-light);
+  color: var(--secondary-main);
+}
+
+/* ── unverified — bg: n-200, color: txt-low ── */
+.badge--unverified {
+  background-color: var(--n-200);
+  color: var(--txt-low);
+}

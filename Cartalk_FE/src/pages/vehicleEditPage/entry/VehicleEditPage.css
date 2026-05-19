@@ -1,0 +1,141 @@
+.vehicle-edit {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-page);
+}
+
+/* 메인 영역 */
+.vehicle-edit__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-32);
+  margin-left: 88px;
+  padding: 60px 80px;
+  background-color: var(--bg-card);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* 페이지 제목 */
+.vehicle-edit__title {
+  font-size: var(--title-size);
+  font-weight: var(--title-weight);
+  letter-spacing: var(--title-tracking);
+  line-height: var(--title-leading);
+  color: var(--txt-high);
+}
+
+/* 텍스트 인풋 섹션 */
+.vehicle-edit__section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+}
+
+/* 라벨 + 인풋 묶음 */
+.vehicle-edit__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+/* 라벨 행 — 라벨명 + 선택(옵션) */
+.vehicle-edit__field-label-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 라벨  */
+.vehicle-edit__field-label {
+  font-size: var(--label-size);
+  font-weight: var(--label-weight);
+  letter-spacing: var(--label-tracking);
+  line-height: var(--label-leading);
+  color: var(--txt-mid);
+}
+
+/* 선택 텍스트 — #bbb */
+.vehicle-edit__field-optional {
+  font-size: var(--label-size);
+  font-weight: var(--label-weight);
+  letter-spacing: var(--label-tracking);
+  line-height: var(--label-leading);
+  color: #bbb;
+}
+
+/* 구분선 */
+.vehicle-edit__divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--border-default);
+  flex-shrink: 0;
+}
+
+/* 업로드 행 — 라벨그룹 + 버튼 */
+.vehicle-edit__upload-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* 라벨 그룹 */
+.vehicle-edit__upload-label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vehicle-edit__upload-desc {
+  font-size: var(--body-sm-size);
+  font-weight: var(--body-sm-weight);
+  line-height: var(--body-sm-leading);
+  color: var(--txt-low);
+}
+
+/* 차량 등록증 섹션 — 상단 라벨+업로드 + 인증 안내 뱃지 */
+.vehicle-edit__regist-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+
+.vehicle-edit__regist-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+/* 인증 안내 뱃지 — bg p-light, radius pill, px 12 py 6 */
+.vehicle-edit__verified-notice {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  background-color: var(--p-light);
+  border-radius: var(--r-pill);
+  font-size: var(--body-sm-size);
+  font-weight: var(--body-sm-weight);
+  line-height: var(--body-sm-leading);
+  color: var(--txt-high);
+  white-space: nowrap;
+}
+
+/* 하단 버튼 묶음 */
+.vehicle-edit__buttons {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.vehicle-edit__buttons .btn {
+  flex: 1;
+}
