@@ -16,6 +16,12 @@ const Sidebar = () => {
   const isProfileActive = location.pathname === '/settings' || location.pathname === '/vehicle-edit'
 
   const handleLogout = () => {
+    localStorage.removeItem('user_id')
+    localStorage.removeItem('user_email')
+    localStorage.removeItem('user_nickname')
+    localStorage.removeItem('user_message')
+    localStorage.removeItem('user_profile')
+
     alert('로그아웃 되었습니다.')
     navigate('/login')
   }
