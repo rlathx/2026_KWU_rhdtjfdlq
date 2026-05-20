@@ -54,11 +54,9 @@ export default function SearchPage() {
 
       const { carNum, owner } = response.data
 
-      // 백엔드 ResponseSearchDto — owner에 nickName만..?
-      // userId는 백엔드에서 추가 필요?
       navigate('/chat', {
         state: {
-          userId: owner.userId, // 백엔드에서 userId 추가 시 동작
+          userId: owner.userId,
           carNum: carNum,
           nickname: owner.nickName,
         },
@@ -118,7 +116,7 @@ export default function SearchPage() {
                   onClick={() =>
                     navigate('/chat', {
                       state: {
-                        userId: chat.opponentUserId, // 백엔드에서 추가 필요
+                        chatId: chat.chatId,
                         carNum: chat.carNum,
                         nickname: chat.owner?.nickName || '',
                       },
