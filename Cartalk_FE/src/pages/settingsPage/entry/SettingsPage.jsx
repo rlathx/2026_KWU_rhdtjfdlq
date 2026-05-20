@@ -44,6 +44,14 @@ export default function SettingsPage() {
         })
       } catch (error) {
         console.error('프로필 조회 실패:', error)
+        // API 실패해도 localStorage 값 그대로 유지 (초기값으로 세팅)
+        setProfileData({
+          email: localStorage.getItem('user_email') || '',
+          nickName: localStorage.getItem('user_nickname') || '',
+          message: localStorage.getItem('user_message') || '',
+          profile: localStorage.getItem('user_profile') || '',
+          isVerified: false,
+        })
       }
     }
 
