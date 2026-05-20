@@ -60,7 +60,13 @@ export default function ChatPage() {
   // [API 1] 채팅방 생성/조회
   useEffect(() => {
     const getOrCreateChatRoom = async () => {
-      if (!state?.userId) return
+      if (!state?.userId && !state?.chatId) return
+
+      if (state?.chatId) {
+        setChatId(state.chatId)
+        setIsRoomLoading(false)
+        return
+      }
 
       setIsRoomLoading(true)
       try {
