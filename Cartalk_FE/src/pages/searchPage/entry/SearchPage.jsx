@@ -26,8 +26,10 @@ export default function SearchPage() {
   useEffect(() => {
     const fetchRecentChats = async () => {
       try {
-        const response = await api.get('/api/chats/top')
-
+        const userId = Number(localStorage.getItem('user_id'))
+        const response = await api.get('/api/chats/top', {
+          params: { userId: userId },
+        })
         setRecentChats(response.data.chats || [])
       } catch (error) {
         console.error('최근 채팅 목록 로드 실패:', error)
@@ -51,11 +53,14 @@ export default function SearchPage() {
       })
 
       const { carNum, owner } = response.data
+
+      // 백엔드 ResponseSearchDto — owner에 nickName만..?
+      // userId는 백엔드에서 추가 필요?
       navigate('/chat', {
         state: {
-          userId: owner.userId,
+          userId: owner.userId, // 백엔드에서 userId 추가 시 동작
           carNum: carNum,
-          nickname: owner.nickname,
+          nickname: owner.nickName,
         },
       })
     } catch (error) {
@@ -110,7 +115,15 @@ export default function SearchPage() {
                   plateNumber={chat.carNum}
                   lastMessage={chat.lastMessage || '아직 대화가 없어요'}
                   isVerified={chat.registerCar}
-                  onClick={() => navigate('/chat', { state: { carNum: chat.carNum } })}
+                  onClick={() =>
+                    navigate('/chat', {
+                      state: {
+                        userId: chat.opponentUserId, // 백엔드에서 추가 필요
+                        carNum: chat.carNum,
+                        nickname: chat.owner?.nickName || '',
+                      },
+                    })
+                  }
                 />
               ))
             ) : (
