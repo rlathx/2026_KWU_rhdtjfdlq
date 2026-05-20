@@ -173,6 +173,10 @@ export default function SignupPage() {
           initialData={{ email: email }}
           onClose={() => navigate('/login')}
           onSuccess={(updatedData) => {
+            if (updatedData.nickName) localStorage.setItem('user_nickname', updatedData.nickName)
+            if (updatedData.message) localStorage.setItem('user_message', updatedData.message)
+            if (updatedData.profile) localStorage.setItem('user_profile', updatedData.profile)
+
             navigate('/', { state: { profileData: updatedData } })
           }}
         />

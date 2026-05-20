@@ -27,12 +27,11 @@ export default function PersonalSettingsModal({ onClose }) {
     setIsLoading(true)
 
     try {
-      const token = localStorage.getItem('access_token')
       const email = localStorage.getItem('user_email')
-      const API_DOMAIN = ''
 
-      if (!token || !email) {
+      if (!email) {
         alert('로그인 정보가 없습니다. 다시 로그인해 주세요.')
+        setIsLoading(false)
         return
       }
 
@@ -45,7 +44,6 @@ export default function PersonalSettingsModal({ onClose }) {
         {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: token,
           },
         },
       )
@@ -80,19 +78,19 @@ export default function PersonalSettingsModal({ onClose }) {
               id='personal-name'
               type='text'
               name='name'
-              placeholder='예: 양의지'
+              placeholder='이름 입력'
               value={formData.name}
               onChange={handleChange}
             />
           </div>
 
           <div className='personal-modal__field'>
-            <label className='personal-modal__field-label'>전화번호</label>
+            <label className='personal-modal__field-label'>휴대폰 번호</label>
             <InputField
               id='personal-phone'
               type='text'
               name='phoneNumber'
-              placeholder='예: 010-1234-5678'
+              placeholder='숫자 11자리 입력'
               value={formData.phoneNumber}
               onChange={handleChange}
             />

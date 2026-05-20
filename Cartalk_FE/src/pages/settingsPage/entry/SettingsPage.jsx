@@ -13,30 +13,27 @@ export default function SettingsPage() {
   const [isPersonalModalOpen, setIsPersonalModalOpen] = useState(false)
   const [isVehicleEditing, setIsVehicleEditing] = useState(false)
   const navigate = useNavigate()
+
+  // 초기값을 localStorage에서 읽어서 세팅
   const [profileData, setProfileData] = useState({
-    email: '',
-    nickName: '',
-    message: '',
-    profile: '',
+    email: localStorage.getItem('user_email') || '',
+    nickName: localStorage.getItem('user_nickname') || '',
+    message: localStorage.getItem('user_message') || '',
+    profile: localStorage.getItem('user_profile') || '',
     isVerified: false,
   })
 
   useEffect(() => {
-    const fetchMyProfile = async () => {
+    const fetchProfile = async () => {
+      const email = localStorage.getItem('user_email')
+      if (!email) {
+        console.error('email이 없습니다')
+        return
+      }
+
       try {
-        const token = localStorage.getItem('access_token')
-        const email = localStorage.getItem('user_email')
-
-        if (!token || !email) return
-
-        const API_DOMAIN = ''
-
-        const response = await axios.get(`${API_DOMAIN}/api/user/profile/${email}`, {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: token,
-          },
-        })
+        const response = await axios.get(`/api/user/profile/${email}`)
+        console.log('프로필 조회 성공:', response.data)
 
         setProfileData({
           email: email,
@@ -46,15 +43,43 @@ export default function SettingsPage() {
           isVerified: response.data.isVerified || false,
         })
       } catch (error) {
-        console.error('프로필 정보를 불러오지 못했습니다.', error)
+        console.error('프로필 조회 실패:', error)
+        // API 실패해도 localStorage 값 그대로 유지 (초기값으로 세팅)
+        setProfileData({
+          email: localStorage.getItem('user_email') || '',
+          nickName: localStorage.getItem('user_nickname') || '',
+          message: localStorage.getItem('user_message') || '',
+          profile: localStorage.getItem('user_profile') || '',
+          isVerified: false,
+        })
       }
     }
 
-    fetchMyProfile()
+    fetchProfile()
   }, [])
 
-  // 차량 목록 조회 api 필요
-  const vehicles = []
+  // 차량 목록 state로 관리
+  const [vehicles, setVehicles] = useState([])
+
+  useEffect(() => {
+    const userId = localStorage.getItem('user_id')
+    if (!userId) return
+
+    // 차량 목록 조회
+    const fetchMyCars = async () => {
+      try {
+        const response = await axios.get('/api/user', {
+          params: { userId: Number(userId) },
+        })
+        setVehicles(response.data || [])
+      } catch (error) {
+        console.error('차량 목록 조회 실패:', error)
+        setVehicles([])
+      }
+    }
+
+    fetchMyCars()
+  }, [])
 
   const handleVehicleSave = () => {
     setIsVehicleEditing(false)
@@ -71,6 +96,7 @@ export default function SettingsPage() {
           nickname={profileData.nickName}
           status={profileData.message}
           isVerified={profileData.isVerified}
+          avatarUrl={profileData.profile}
           onEditProfile={() => setIsProfileModalOpen(true)}
           onEditPersonal={() => setIsPersonalModalOpen(true)}
         />
@@ -93,11 +119,12 @@ export default function SettingsPage() {
         <div className='settings__vehicle-list'>
           {vehicles.map((v) => (
             <VehicleCard
-              key={v.id}
-              plateNumber={v.plateNumber}
-              type={v.type}
-              note={v.note}
-              isVerified={v.isVerified}
+              key={v.carId}
+              plateNumber={v.carNum}
+              type={v.vehicleType}
+              note={v.comment}
+              imageUrl={v.carProfile}
+              isVerified={true}
               isEditing={isVehicleEditing}
               onClick={() => navigate('/vehicle-edit')}
             />
@@ -106,12 +133,26 @@ export default function SettingsPage() {
         </div>
       </main>
 
-      {/* 모달 연동 부분 (변경 없음) */}
+      {/* 모달 연동 부분 */}
       {isProfileModalOpen && (
         <ProfileSettingsModal
-          initialData={profileData}
+          isOpen={isProfileModalOpen}
           onClose={() => setIsProfileModalOpen(false)}
+          initialData={{
+            ...profileData,
+            email: profileData.email || localStorage.getItem('user_email'), // ← 보험 추가
+          }}
           onSuccess={(updatedData) => {
+            // localStorage에도 저장해서 재렌더링 시 유지
+            if (updatedData.nickName !== undefined) {
+              localStorage.setItem('user_nickname', updatedData.nickName)
+            }
+            if (updatedData.message !== undefined) {
+              localStorage.setItem('user_message', updatedData.message)
+            }
+            if (updatedData.profile !== undefined) {
+              localStorage.setItem('user_profile', updatedData.profile)
+            }
             setProfileData((prev) => ({ ...prev, ...updatedData }))
             setIsProfileModalOpen(false)
           }}

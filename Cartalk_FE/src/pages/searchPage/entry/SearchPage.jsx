@@ -26,8 +26,10 @@ export default function SearchPage() {
   useEffect(() => {
     const fetchRecentChats = async () => {
       try {
-        const response = await api.get('/api/chats/top')
-
+        const userId = Number(localStorage.getItem('user_id'))
+        const response = await api.get('/api/chats/top', {
+          params: { userId: userId },
+        })
         setRecentChats(response.data.chats || [])
       } catch (error) {
         console.error('최근 채팅 목록 로드 실패:', error)
@@ -51,11 +53,12 @@ export default function SearchPage() {
       })
 
       const { carNum, owner } = response.data
+
       navigate('/chat', {
         state: {
           userId: owner.userId,
           carNum: carNum,
-          nickname: owner.nickname,
+          nickname: owner.nickName,
         },
       })
     } catch (error) {
@@ -110,7 +113,15 @@ export default function SearchPage() {
                   plateNumber={chat.carNum}
                   lastMessage={chat.lastMessage || '아직 대화가 없어요'}
                   isVerified={chat.registerCar}
-                  onClick={() => navigate('/chat', { state: { carNum: chat.carNum } })}
+                  onClick={() =>
+                    navigate('/chat', {
+                      state: {
+                        chatId: chat.chatId,
+                        carNum: chat.carNum,
+                        nickname: chat.owner?.nickName || '',
+                      },
+                    })
+                  }
                 />
               ))
             ) : (

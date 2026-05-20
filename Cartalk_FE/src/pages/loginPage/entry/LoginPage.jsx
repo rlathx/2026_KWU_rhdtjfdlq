@@ -22,8 +22,14 @@ export default function LoginPage() {
         password: password,
       })
 
-      console.log('백엔드 응답:', response.data)
-      alert(response.data.return)
+      // 로그인 정보 저장
+      localStorage.setItem('user_email', response.data.email)
+      localStorage.setItem('user_id', response.data.id)
+      localStorage.setItem('user_nickname', response.data.userName || '')
+      localStorage.setItem('user_message', '')
+      localStorage.setItem('user_profile', '')
+
+      alert(response.data.message || '로그인 성공')
       navigate('/')
     } catch (error) {
       if (error.response) {
