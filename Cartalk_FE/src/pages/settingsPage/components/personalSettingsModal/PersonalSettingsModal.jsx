@@ -27,12 +27,11 @@ export default function PersonalSettingsModal({ onClose }) {
     setIsLoading(true)
 
     try {
-      const token = localStorage.getItem('access_token')
       const email = localStorage.getItem('user_email')
-      const API_DOMAIN = ''
 
-      if (!token || !email) {
+      if (!email) {
         alert('로그인 정보가 없습니다. 다시 로그인해 주세요.')
+        setIsLoading(false)
         return
       }
 
@@ -45,7 +44,6 @@ export default function PersonalSettingsModal({ onClose }) {
         {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: token,
           },
         },
       )
