@@ -80,19 +80,19 @@ export default function PersonalSettingsModal({ onClose }) {
               id='personal-name'
               type='text'
               name='name'
-              placeholder='예: 양의지'
+              placeholder='이름 입력'
               value={formData.name}
               onChange={handleChange}
             />
           </div>
 
           <div className='personal-modal__field'>
-            <label className='personal-modal__field-label'>전화번호</label>
+            <label className='personal-modal__field-label'>휴대폰 번호</label>
             <InputField
               id='personal-phone'
               type='text'
               name='phoneNumber'
-              placeholder='예: 010-1234-5678'
+              placeholder='숫자 11자리 입력'
               value={formData.phoneNumber}
               onChange={handleChange}
             />
