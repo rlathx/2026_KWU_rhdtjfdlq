@@ -17,4 +17,8 @@ public class RequestSendMessageDto {
 
     @NotBlank(message = "messageType은 필수입니다.")
     private String messageType;
+
+    private String imageUrl;
+
+
 }

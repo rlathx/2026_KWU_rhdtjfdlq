@@ -9,4 +9,5 @@ public class ResponseLoginDto {
     private Long id;
     private String email;
     private String userName;
+    private String message;
 }

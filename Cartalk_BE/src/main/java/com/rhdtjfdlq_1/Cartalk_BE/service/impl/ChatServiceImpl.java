@@ -84,14 +84,14 @@ public class ChatServiceImpl implements ChatService {
         List<ResponseTopChatDto> chats = chatRooms.stream()
                 .map(chatRoom -> {
 
-                    // 🔹 마지막 메시지
+
                     var lastMessageOpt = chatMessageRepository
                             .findTopByChatRoomIdOrderByCreatedAtDesc(chatRoom.getId());
 
                     String lastMessage = lastMessageOpt.map(m -> m.getContent()).orElse(null);
                     var lastMessageAt = lastMessageOpt.map(m -> m.getCreatedAt()).orElse(null);
 
-                    // 🔹 상대방 유저
+
                     UserEntity opponent = chatParticipantRepository
                             .findOpponent(chatRoom.getId(), loginUserId)
                             .orElseThrow(() -> new RuntimeException("OPPONENT_NOT_FOUND"));
@@ -110,13 +110,13 @@ public class ChatServiceImpl implements ChatService {
                             .lastMessageAt(lastMessageAt)
                             .build();
                 })
-                // 🔥 마지막 메시지 기준 정렬
+
                 .sorted((a, b) -> {
                     if (a.getLastMessageAt() == null) return 1;
                     if (b.getLastMessageAt() == null) return -1;
                     return b.getLastMessageAt().compareTo(a.getLastMessageAt());
                 })
-                // 🔥 상위 3개
+
                 .limit(3)
                 .toList();
 

@@ -1,6 +1,7 @@
 package com.rhdtjfdlq_1.Cartalk_BE.service.impl;
 
 import com.rhdtjfdlq_1.Cartalk_BE.dto.RequestLoginDto;
+import com.rhdtjfdlq_1.Cartalk_BE.dto.ResponseLoginDto;
 import com.rhdtjfdlq_1.Cartalk_BE.entity.UserEntity;
 import com.rhdtjfdlq_1.Cartalk_BE.repository.UserRepository;
 import com.rhdtjfdlq_1.Cartalk_BE.service.port.LoginService;
@@ -15,7 +16,7 @@ public class LoginServiceImpl implements LoginService {
     private final UserRepository userRepository;
 
     @Override
-    public String login(RequestLoginDto request) {
+    public ResponseLoginDto login(RequestLoginDto request) {
 
         UserEntity user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("USER_NOT_FOUND"));
@@ -24,6 +25,11 @@ public class LoginServiceImpl implements LoginService {
             throw new RuntimeException("INVALID_PASSWORD");
         }
 
-        return "로그인 성공";
+        return ResponseLoginDto.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .userName(user.getNickName())
+                .message("로그인 성공")
+                .build();
     }
 }
