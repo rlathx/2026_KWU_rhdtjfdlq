@@ -66,55 +66,40 @@ export default function VehicleEditPage() {
       alert('차량 번호와 차종을 입력해 주세요.')
       return
     }
-
     if (isLoading) return
     setIsLoading(true)
 
     try {
-      const token = localStorage.getItem('access_token')
       const userId = localStorage.getItem('user_id')
-      const API_DOMAIN = ''
 
-      if (!token || !userId) {
+      if (!userId) {
         alert('로그인 정보가 없습니다. 다시 로그인해 주세요.')
         setIsLoading(false)
         return
       }
 
       const formData = new FormData()
-      formData.append('carNum', textData.carNum)
       formData.append('vehicleType', textData.vehicleType)
-      formData.append('comment', textData.comment)
-
+      formData.append('carNum', textData.carNum)
+      if (textData.comment) formData.append('comment', textData.comment)
       if (fileData.carProfile) formData.append('carProfile', fileData.carProfile)
       if (fileData.registration) formData.append('registration', fileData.registration)
 
       let response
 
       if (isEditMode) {
-        // 수정 (PATCH)
-        response = await axios.patch(`${API_DOMAIN}/api/user/car/${carId}`, formData, {
-          params: { userId: userId },
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: token,
-          },
+        response = await axios.patch(`/api/user/cars/${carId}`, formData, {
+          params: { userId: Number(userId) },
+          headers: { 'Content-Type': 'multipart/form-data' },
         })
       } else {
-        // 추가 (POST)
-        response = await axios.post(`${API_DOMAIN}/api/user/cars`, formData, {
-          params: { userId: userId },
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: token,
-          },
+        response = await axios.post(`/api/user/cars`, formData, {
+          params: { userId: Number(userId) },
+          headers: { 'Content-Type': 'multipart/form-data' },
         })
       }
 
-      alert(
-        response.data.message ||
-          (isEditMode ? '차량 정보 수정이 완료되었습니다.' : '차량 등록이 완료되었습니다.'),
-      )
+      alert(response.data.message || (isEditMode ? '차량 수정 완료' : '차량 등록 완료'))
       navigate('/settings')
     } catch (error) {
       if (error.response) {
@@ -122,7 +107,7 @@ export default function VehicleEditPage() {
         if (status === 400) {
           alert(error.response.data.message || '올바르지 않은 파일 형식입니다.')
         } else if (status === 404) {
-          alert(error.response.data.ERROR || '해당 정보를 찾을 수 없습니다.')
+          alert(error.response.data.message || '해당 정보를 찾을 수 없습니다.')
         } else {
           alert(isEditMode ? '차량 수정에 실패했습니다.' : '차량 등록에 실패했습니다.')
         }
@@ -137,18 +122,22 @@ export default function VehicleEditPage() {
   return (
     <div className='vehicle-edit'>
       <Sidebar />
-      <main className='vehicle-edit__main'>
-        <h1 className='vehicle-edit__title'>{isEditMode ? '내 차량 수정' : '내 차량 추가'}</h1>
 
-        <section className='vehicle-edit__section'>
+      <main className='vehicle-edit__main'>
+        {/* 페이지 제목 */}
+        <h1 className='vehicle-edit__title'>차량 정보 설정</h1>
+
+        {/* 텍스트 인풋 섹션 */}
+        <div className='vehicle-edit__section'>
+          {/* 차량 번호 */}
           <div className='vehicle-edit__field'>
             <div className='vehicle-edit__field-label-row'>
-              <label className='vehicle-edit__field-label'>차량 번호</label>
+              <span className='vehicle-edit__field-label'>차량 번호</span>
             </div>
             <InputField
               type='text'
               name='carNum'
-              placeholder='10라 7777'
+              placeholder='예) 12가 3456'
               value={textData.carNum}
               onChange={handleTextChange}
             />
@@ -156,39 +145,40 @@ export default function VehicleEditPage() {
 
           <div className='vehicle-edit__field'>
             <div className='vehicle-edit__field-label-row'>
-              <label className='vehicle-edit__field-label'>차종</label>
+              <span className='vehicle-edit__field-label'>차종</span>
             </div>
             <InputField
               type='text'
               name='vehicleType'
-              placeholder='포르쉐 911'
+              placeholder='예) 현대 아반떼 CN7'
               value={textData.vehicleType}
               onChange={handleTextChange}
             />
           </div>
 
+          {/* 특이사항 (선택) */}
           <div className='vehicle-edit__field'>
             <div className='vehicle-edit__field-label-row'>
-              <label className='vehicle-edit__field-label'>코멘트</label>
-              <span className='vehicle-edit__field-optional'>(선택)</span>
+              <label className='vehicle-edit__field-label'>특이사항</label>
+              <span className='vehicle-edit__field-optional'>선택</span>
             </div>
             <InputField
               type='text'
               name='comment'
-              placeholder='신차입니다. 스크래치 없습니다.'
+              placeholder='예) 앞 범퍼 스크래치'
               value={textData.comment}
               onChange={handleTextChange}
             />
           </div>
-        </section>
+        </div>
 
         <div className='vehicle-edit__divider' />
 
-        <section className='vehicle-edit__section'>
+        <div className='vehicle-edit__section'>
           <div className='vehicle-edit__upload-row'>
             <div className='vehicle-edit__upload-label'>
               <h3 className='vehicle-edit__field-label'>차량 사진</h3>
-              <p className='vehicle-edit__upload-desc'>JPG, PNG 파일만 업로드 가능해요</p>
+              <p className='vehicle-edit__upload-desc'>PDF, PNG, JPG 파일만 업로드 가능해요</p>
             </div>
             <input
               type='file'
@@ -205,32 +195,38 @@ export default function VehicleEditPage() {
 
           <div className='vehicle-edit__divider' />
 
+          {/* 차량 등록증 업로드 (선택) */}
           <div className='vehicle-edit__regist-section'>
-            <div className='vehicle-edit__upload-row vehicle-edit__regist-row'>
+            <div className='vehicle-edit__regist-row'>
               <div className='vehicle-edit__upload-label'>
-                <h3 className='vehicle-edit__field-label'>차량 등록증</h3>
-                <p className='vehicle-edit__upload-desc'>PDF, JPG, PNG 파일만 업로드 가능해요</p>
+                <div className='vehicle-edit__field-label-row'>
+                  <span className='vehicle-edit__field-label'>차량 등록증</span>
+                  <span className='vehicle-edit__field-optional'>선택</span>
+                </div>
+
+                <p className='vehicle-edit__upload-desc'>PDF, PNG, JPG 파일만 업로드 가능해요</p>
+                <input
+                  type='file'
+                  name='registration'
+                  accept='.pdf, image/*'
+                  ref={registrationRef}
+                  style={{ display: 'none' }}
+                  onChange={handleFileChange}
+                />
+                <span className='vehicle-edit__verified-notice'>
+                  ✓ 업로드 시 인증된 회원 라벨이 부여돼요
+                </span>
               </div>
-              <input
-                type='file'
-                name='registration'
-                accept='.pdf, image/*'
-                ref={registrationRef}
-                style={{ display: 'none' }}
-                onChange={handleFileChange}
-              />
               <Button variant='outline' onClick={() => registrationRef.current.click()}>
                 {isEditMode ? '새 파일 업로드' : '파일 업로드'}
               </Button>
             </div>
-            <div className='vehicle-edit__verified-notice'>
-              인증 시 차량에 인증 마크가 표시돼요!
-            </div>
           </div>
-        </section>
+        </div>
 
         <div className='vehicle-edit__divider' />
 
+        {/* 하단 버튼 */}
         <div className='vehicle-edit__buttons'>
           <Button variant='ghost' onClick={() => navigate(-1)} disabled={isLoading}>
             취소
