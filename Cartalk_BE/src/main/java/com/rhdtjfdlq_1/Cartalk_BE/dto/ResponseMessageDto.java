@@ -17,6 +17,7 @@ public class ResponseMessageDto {
     private Long senderId;
     private String nickname;
     private String content;
+    private String imageUrl;
     private String messageType;
     private LocalDateTime createdAt;
     private boolean isMine;

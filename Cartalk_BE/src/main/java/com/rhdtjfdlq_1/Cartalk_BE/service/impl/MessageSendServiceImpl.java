@@ -37,6 +37,7 @@ public class MessageSendServiceImpl implements MessageSendService {
                         .sender(sender)
                         .content(request.getContent())
                         .messageType(request.getMessageType())
+                        .imageUrl(request.getImageUrl())
                         .build()
         );
 
@@ -46,6 +47,7 @@ public class MessageSendServiceImpl implements MessageSendService {
                 .nickname(sender.getNickName())
                 .content(message.getContent())
                 .messageType(message.getMessageType())
+                .imageUrl(message.getImageUrl())
                 .createdAt(message.getCreatedAt())
                 .isMine(true)
                 .build();

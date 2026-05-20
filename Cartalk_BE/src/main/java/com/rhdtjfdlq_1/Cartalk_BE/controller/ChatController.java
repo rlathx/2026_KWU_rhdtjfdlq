@@ -26,7 +26,7 @@ public class ChatController {
 
     @GetMapping("/top")
     public ResponseEntity<ResponseTopChatListDto> getTopChats(
-            @RequestParam Long userId   // 🔥 여기 핵심
+            @RequestParam Long userId
     ) {
 
         ResponseTopChatListDto response = chatService.getTopChats(userId);

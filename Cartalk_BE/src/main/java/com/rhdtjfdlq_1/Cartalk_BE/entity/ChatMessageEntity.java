@@ -28,8 +28,11 @@ public class ChatMessageEntity {
     @Column(columnDefinition = "TEXT")
     private String content;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Column(name = "message_type", nullable = false)
-    private String messageType;   // 예: TEXT
+    private String messageType;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
