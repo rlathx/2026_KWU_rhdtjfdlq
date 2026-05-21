@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 @RequiredArgsConstructor
 public class ProfileServiceImpl implements ProfileService {
@@ -22,9 +25,11 @@ public class ProfileServiceImpl implements ProfileService {
                 .orElseThrow(() -> new RuntimeException("USER_NOT_FOUND"));
 
         if (request.getProfile() != null && !request.getProfile().isBlank()) {
+
             String profile = request.getProfile().toLowerCase();
+
             boolean validFileType =
-                            profile.endsWith(".png") ||
+                    profile.endsWith(".png") ||
                             profile.endsWith(".jpg") ||
                             profile.endsWith(".jpeg") ||
                             profile.endsWith(".pdf");
@@ -41,5 +46,20 @@ public class ProfileServiceImpl implements ProfileService {
         );
 
         return "프로필 설정이 완료되었습니다.";
+    }
+
+    @Override
+    public Object getProfile(String email) {
+
+        UserEntity user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("USER_NOT_FOUND"));
+
+        Map<String, Object> result = new HashMap<>();
+
+        result.put("nickName", user.getNickName());
+        result.put("message", user.getMessage());
+        result.put("profile", user.getProfile());
+
+        return result;
     }
 }

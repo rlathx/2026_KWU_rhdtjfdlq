@@ -21,7 +21,19 @@ public class ProfileController {
             @PathVariable String email,
             @Valid @RequestBody RequestProfileDto request
     ) {
+
         String result = profileService.updateProfile(email, request);
+
         return ResponseEntity.ok(Map.of("message", result));
+    }
+
+    @GetMapping("/profile/{email}")
+    public ResponseEntity<?> getProfile(
+            @PathVariable String email
+    ) {
+
+        Object result = profileService.getProfile(email);
+
+        return ResponseEntity.ok(result);
     }
 }
