@@ -4,12 +4,12 @@ import InputField from '../../../../components/inputField/InputField'
 import Button from '../../../../components/button/Button'
 import './PersonalSettingsModal.css'
 
-export default function PersonalSettingsModal({ onClose }) {
+export default function PersonalSettingsModal({ onClose, initialData }) {
   const [isLoading, setIsLoading] = useState(false)
 
   const [formData, setFormData] = useState({
-    name: '',
-    phoneNumber: '',
+    name: initialData?.name || '',
+    phoneNumber: initialData?.phoneNumber || '',
   })
 
   const handleChange = (e) => {
@@ -90,7 +90,7 @@ export default function PersonalSettingsModal({ onClose }) {
               id='personal-phone'
               type='text'
               name='phoneNumber'
-              placeholder='숫자 11자리 입력'
+              placeholder='010-1234-5678'
               value={formData.phoneNumber}
               onChange={handleChange}
             />

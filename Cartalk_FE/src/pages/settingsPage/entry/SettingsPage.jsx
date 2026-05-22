@@ -42,6 +42,9 @@ export default function SettingsPage() {
           profile: response.data.profile,
           isVerified: response.data.isVerified || false,
         })
+        localStorage.setItem('user_nickname', response.data.nickName || '')
+        localStorage.setItem('user_message', response.data.message || '')
+        localStorage.setItem('user_profile', response.data.profile || '')
       } catch (error) {
         console.error('프로필 조회 실패:', error)
         // API 실패해도 localStorage 값 그대로 유지 (초기값으로 세팅)
@@ -160,7 +163,13 @@ export default function SettingsPage() {
       )}
 
       {isPersonalModalOpen && (
-        <PersonalSettingsModal onClose={() => setIsPersonalModalOpen(false)} />
+        <PersonalSettingsModal
+          onClose={() => setIsPersonalModalOpen(false)}
+          initialData={{
+            name: profileData.name || '',
+            phoneNumber: profileData.phoneNumber || '',
+          }}
+        />
       )}
     </div>
   )
