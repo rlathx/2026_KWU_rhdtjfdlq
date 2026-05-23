@@ -64,7 +64,7 @@ public class UserEntity {
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
-        updatedAt = createdAt; // 🔥 추가
+        updatedAt = createdAt;
     }
 
     @PreUpdate

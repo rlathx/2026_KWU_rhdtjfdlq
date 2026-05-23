@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
@@ -30,5 +33,20 @@ public class AccountServiceImpl implements AccountService {
         user.updateMyInfo(request.getName(), phoneNumber);
 
         return "내 정보가 설정 되었습니다.";
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Object getMyInfo(String email) {
+
+        UserEntity user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("USER_NOT_FOUND"));
+
+        Map<String, Object> result = new HashMap<>();
+
+        result.put("name", user.getName());
+        result.put("phoneNumber", user.getPhoneNum());
+
+        return result;
     }
 }

@@ -59,6 +59,8 @@ public class ProfileServiceImpl implements ProfileService {
         result.put("nickName", user.getNickName());
         result.put("message", user.getMessage());
         result.put("profile", user.getProfile());
+        result.put("name", user.getName());
+        result.put("phoneNumber", user.getPhoneNum());
 
         return result;
     }
