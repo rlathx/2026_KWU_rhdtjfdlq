@@ -12,6 +12,7 @@
   flex: 1;
   margin-left: 88px;
   min-height: 100vh;
+  height: 100vh;
   background-color: var(--bg-chat);
   overflow: hidden;
 }

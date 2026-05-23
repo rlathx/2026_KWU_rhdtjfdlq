@@ -38,6 +38,8 @@ export default function ChatPage() {
   const [remainingCount, setRemainingCount] = useState(null)
   const [isCallAvailable, setIsCallAvailable] = useState(null)
 
+  const [opponentCarInfo, setOpponentCarInfo] = useState(null)
+
   const messagesEndRef = useRef(null)
 
   const scrollToBottom = (behavior = 'smooth') => {
@@ -51,7 +53,7 @@ export default function ChatPage() {
   }, [messages])
 
   useEffect(() => {
-    if (!state || !state.userId) {
+    if (!state || (!state.userId && !state.chatId)) {
       setIsChatActive(false)
       setIsRoomLoading(false)
     }
@@ -99,7 +101,15 @@ export default function ChatPage() {
       })
 
       const fetchedMessages = response.data.messages || []
-      setMessages([...fetchedMessages].reverse())
+      const myId = Number(localStorage.getItem('user_id'))
+
+      // senderId가 내 id면 isMine true로 강제 설정
+      const correctedMessages = fetchedMessages.map((msg) => ({
+        ...msg,
+        isMine: msg.senderId === myId,
+      }))
+
+      setMessages([...correctedMessages].reverse())
       SET_NEXT_CURSOR(response.data.nextCursor)
       SET_HAS_NEXT(response.data.hasNext)
 
@@ -117,6 +127,49 @@ export default function ChatPage() {
     return () => clearInterval(interval)
   }, [chatId])
 
+  useEffect(() => {
+    if (!state?.userId) return
+
+    const fetchOpponentCarInfo = async () => {
+      try {
+        const response = await api.get('/api/user', {
+          params: { userId: state.userId },
+        })
+        const cars = response.data || []
+        if (cars.length > 0) {
+          setOpponentCarInfo(cars[0])
+        }
+      } catch (error) {
+        console.error('차량 정보 조회 실패:', error)
+      }
+    }
+
+    fetchOpponentCarInfo()
+  }, [state?.userId])
+
+  // chatId가 세팅되면 현재 안심전화 횟수 조회
+  useEffect(() => {
+    if (!chatId) return
+
+    const fetchCallInfo = async () => {
+      try {
+        const response = await api.post(`/api/chats/${chatId}/calls`, {
+          userId: Number(localStorage.getItem('user_id')),
+        })
+        const { call, callAvailable } = response.data
+        setMaxCount(call.maxCount)
+        setRemainingCount(call.remainingCount)
+        setIsCallAvailable(callAvailable)
+      } catch {
+        setMaxCount(3)
+        setRemainingCount(3)
+        setIsCallAvailable(true)
+      }
+    }
+
+    fetchCallInfo()
+  }, [chatId])
+
   // [API 3] 텍스트 메시지 전송
   const handleSend = async () => {
     if (!inputValue.trim() || isSending || !chatId) return
@@ -131,7 +184,7 @@ export default function ChatPage() {
       content: currentText,
       messageType: 'TEXT',
       createdAt: new Date().toISOString(),
-      mine: true,
+      isMine: true,
     }
 
     setMessages((prev) => [...prev, optimisticMessage])
@@ -142,6 +195,7 @@ export default function ChatPage() {
         content: currentText,
         messageType: 'TEXT',
       })
+      fetchMessages()
     } catch (error) {
       console.error('메시지 전송 실패:', error)
       alert('메시지 전송에 실패했습니다.')
@@ -162,7 +216,7 @@ export default function ChatPage() {
       messageId: Date.now(),
       messageType: 'IMAGE',
       content: previewUrl,
-      mine: true,
+      isMine: true,
       createdAt: new Date().toISOString(),
     }
     setMessages((prev) => [...prev, optimisticImage])
@@ -172,6 +226,14 @@ export default function ChatPage() {
         headers: { 'content-type': 'multipart/form-data' },
       })
       const imageUrl = response.data.imageUrl
+
+      // 이미지 메시지 전송 api
+      await api.post(`/api/chats/${chatId}/messages`, {
+        userId: Number(localStorage.getItem('user_id')),
+        content: imageUrl,
+        messageType: 'IMAGE',
+        imageUrl: imageUrl,
+      })
 
       setMessages((prev) =>
         prev.map((msg) => (msg.content === previewUrl ? { ...msg, content: imageUrl } : msg)),
@@ -272,7 +334,8 @@ export default function ChatPage() {
         <ChatHeader
           plateNumber={state?.carNum || '차량번호 없음'}
           nickname={state?.nickname || '닉네임 정보 없음'}
-          isVerified={true}
+          isVerified={state?.isVerified || false}
+          avatarUrl={state?.avatarUrl}
           safeCallCount={
             remainingCount !== null && maxCount !== null ? `${remainingCount}/${maxCount}` : '-/-'
           }
@@ -285,9 +348,9 @@ export default function ChatPage() {
           {messages.map((msg) => (
             <ChatBubble
               key={msg.messageId}
-              type={msg.mine ? 'mine' : 'other'}
+              type={msg.isMine ? 'mine' : 'other'}
               text={msg.messageType === 'TEXT' ? msg.content : undefined}
-              imageUrl={msg.messageType === 'IMAGE' ? msg.content : undefined}
+              imageUrl={msg.messageType === 'IMAGE' ? msg.imageUrl || msg.content : undefined}
             />
           ))}
           <div ref={messagesEndRef} />
@@ -303,12 +366,12 @@ export default function ChatPage() {
 
       {isVehicleModalOpen && (
         <VehicleModal
-          plateNumber={state?.carNum || '12가 3456'}
-          nickname={state?.nickname || '닉네임은드라이버'}
-          type='현대 아반떼 CN7'
-          note='원래 범퍼에 스크래치가 있습니다'
-          status='주차 중이에요'
-          isVerified={true}
+          plateNumber={state?.carNum || ''}
+          nickname={state?.nickname || ''}
+          type={opponentCarInfo?.vehicleType || ''}
+          note={opponentCarInfo?.comment || ''}
+          imageUrl={opponentCarInfo?.carProfile || ''}
+          isVerified={!!opponentCarInfo}
           onClose={() => setIsVehicleModalOpen(false)}
         />
       )}
@@ -321,7 +384,13 @@ export default function ChatPage() {
       )}
 
       {IS_CALL_RESTRICT_OPEN && (
-        <CallRestrictModal onClose={() => SET_IS_CALL_RESTRICT_OPEN(false)} />
+        <>
+          <div
+            style={{ position: 'fixed', inset: 0, zIndex: 199 }}
+            onClick={() => SET_IS_CALL_RESTRICT_OPEN(false)}
+          />
+          <CallRestrictModal onClose={() => SET_IS_CALL_RESTRICT_OPEN(false)} />
+        </>
       )}
     </div>
   )
