@@ -33,7 +33,19 @@ spring:
         smtp:
           auth: true
           starttls:
-            enable: true
+            enable:
+  logging:
+    level:
+      org.springframework.web: DEBUG
+      org.springframework: DEBUG
+      org.hibernate.SQL: DEBUG
+
+  server:
+    error:
+      include-message: always
+      include-binding-errors: always
+      include-stacktrace: always
 
 file:
   upload-dir: C:/uploads/
+
